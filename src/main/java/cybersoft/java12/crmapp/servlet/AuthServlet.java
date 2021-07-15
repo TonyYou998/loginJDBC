@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Respository.UserRespository;
+import Services.AuthService;
 import cybersoft.java12.crmapp.util.JspConst;
 import cybersoft.java12.crmapp.util.ServletConst;
 import cybersoft.java12.crmapp.util.UrlConst;
@@ -23,6 +24,14 @@ import cybersoft.java12.crmapp.util.UrlConst;
 	
 })
 public class AuthServlet extends HttpServlet {
+	private AuthService service;
+	
+	@Override
+	public void init() throws ServletException {
+		// TODO Auto-generated method stub
+		super.init();
+		service=new AuthService();
+	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		 String path=req.getServletPath();
@@ -69,7 +78,7 @@ public class AuthServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 String path=req.getServletPath();
-		UserRespository userRespo=new UserRespository();
+	//	UserRespository userRespo=new UserRespository();
 			switch(path) {
 			
 			case UrlConst.LOGIN:
@@ -88,8 +97,10 @@ public class AuthServlet extends HttpServlet {
 				//logic dang nhap
 				if(email==null || pass ==null)
 					isLoginSuccessfull=false;
-				else if(!userRespo.tryLogin(email, pass))
-						isLoginSuccessfull=false;
+				/*else if(!userRespo.tryLogin(email, pass))
+						isLoginSuccessfull=false;*/
+				else if (!service.login(email, pass))
+					isLoginSuccessfull=false;
 				if(isLoginSuccessfull) {
 					currentSession.setAttribute("status", "logged successful");
 				

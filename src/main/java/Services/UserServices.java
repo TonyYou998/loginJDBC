@@ -1,9 +1,32 @@
 package Services;
 
-import Respository.UserRespository;
+import java.util.List;
+
+import Modal.User;
+
+import dao.UserDao;
 
 public class UserServices {
-	private UserRespository userRespo=new UserRespository();
-	//định gọi trylogin từ đây nhưng thấy rờm rà quá nên gọi trực tiếp từ authservlet luôn hem biết đúng ko :(
+
+	
+	
+	
+	private UserDao dao;
+	public  UserServices() {
+		dao=new UserDao();
+	}
+	public List<User> findAll() {
+		// TODO Auto-generated method stub
+		List<User> users=null;
+		try {
+			users=dao.findAll();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.toString());
+		}
+		
+	
+		return users;
+	}
 	
 }
